@@ -1,0 +1,36 @@
+from aiogram import Router, F
+from aiogram.types import CallbackQuery
+
+from data.products import CATEGORIES, PRODUCTS, build_product_card
+from data.texts import ABOUT_TEXT, ONLINE_INTRO, UNKNOWN_PRODUCT_TEXT
+from keyboards.catalog import category_products_keyboard
+from keyboards.main import main_menu_keyboard
+from keyboards.product import product_keyboard
+
+router = Router()
+
+
+@router.callback_query(F.data == "cat_about")
+async def show_about(callback: CallbackQuery) -> None:
+    await callback.message.answer(ABOUT_TEXT, reply_markup=main_menu_keyboard())
+    await callback.answer()
+
+
+@router.callback_query(F.data.in_(CATEGORIES.keys()))
+async def show_category(callback: CallbackQuery) -> None:
+    cat_key = callback.data
+    cat = CATEGORIES[cat_key]
+    intro = ONLINE_INTRO if cat_key == "cat_online" else f"<b>{cat['title']}</b>\n\n{cat['desc']}"
+    await callback.message.answer(intro, reply_markup=category_products_keyboard(cat_key))
+    await callback.answer()
+
+
+@router.callback_query(F.data.startswith("prod_view_"))
+async def show_product(callback: CallbackQuery) -> None:
+    key = callback.data.removeprefix("prod_view_")
+    if key not in PRODUCTS:
+        await callback.message.answer(UNKNOWN_PRODUCT_TEXT, reply_markup=main_menu_keyboard())
+        await callback.answer()
+        return
+    await callback.message.answer(build_product_card(key), reply_markup=product_keyboard(key))
+    await callback.answer()
