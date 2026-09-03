@@ -10,10 +10,9 @@ def product_keyboard(key: str) -> InlineKeyboardMarkup:
     return builder.as_markup()
 
 
-def pay_keyboard(order_uid: str, pay_url: str) -> InlineKeyboardMarkup:
+def pay_keyboard(key: str) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    builder.button(text="💳 Перейти к оплате", url=pay_url)
-    builder.button(text="✅ Я оплатил", callback_data=f"prod_paidmanual_{order_uid}")
+    builder.button(text="✅ Я оплатил", callback_data=f"prod_paid_{key}")
     builder.button(text="⬅️ В начало", callback_data="back_main")
     builder.adjust(1)
     return builder.as_markup()
