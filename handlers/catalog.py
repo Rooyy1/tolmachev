@@ -1,4 +1,7 @@
+import logging
+
 from aiogram import Router, F
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import CallbackQuery
 
 from data.products import CATEGORIES, PRODUCTS, build_product_card
@@ -8,6 +11,7 @@ from keyboards.main import main_menu_keyboard
 from keyboards.product import product_keyboard
 
 router = Router()
+logger = logging.getLogger(__name__)
 
 
 @router.callback_query(F.data == "cat_about")
@@ -27,10 +31,29 @@ async def show_category(callback: CallbackQuery) -> None:
 
 @router.callback_query(F.data.startswith("prod_view_"))
 async def show_product(callback: CallbackQuery) -> None:
+    """Карточка товара: креатив (фото) + описание + кнопки под ним.
+    Если фото по какой-то причине не отправляется (например, file_id
+    привязан к другому боту) — тихо откатываемся на текстовую карточку,
+    чтобы пользователь в любом случае не остался без ответа."""
     key = callback.data.removeprefix("prod_view_")
     if key not in PRODUCTS:
         await callback.message.answer(UNKNOWN_PRODUCT_TEXT, reply_markup=main_menu_keyboard())
         await callback.answer()
         return
-    await callback.message.answer(build_product_card(key), reply_markup=product_keyboard(key))
+
+    product = PRODUCTS[key]
+    caption = build_product_card(key)
+    photo = product.get("photo")
+
+    if photo:
+        try:
+            await callback.message.answer_photo(
+                photo=photo, caption=caption, reply_markup=product_keyboard(key)
+            )
+            await callback.answer()
+            return
+        except TelegramBadRequest:
+            logger.warning("Не удалось отправить фото для товара %s, отправляю текст.", key)
+
+    await callback.message.answer(caption, reply_markup=product_keyboard(key))
     await callback.answer()
