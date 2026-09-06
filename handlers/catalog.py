@@ -4,6 +4,7 @@ from aiogram import Router, F
 from aiogram.exceptions import TelegramBadRequest
 from aiogram.types import CallbackQuery
 
+from config import WELCOME_PHOTO_ID
 from data.products import CATEGORIES, PRODUCTS, build_product_card
 from data.texts import ABOUT_TEXT, ONLINE_INTRO, UNKNOWN_PRODUCT_TEXT
 from keyboards.catalog import category_products_keyboard
@@ -16,6 +17,20 @@ logger = logging.getLogger(__name__)
 
 @router.callback_query(F.data == "cat_about")
 async def show_about(callback: CallbackQuery) -> None:
+    """Та же приветственная фотография, что и в /start — чтобы карточка
+    "О тренере" выглядела так же, а не голым текстом."""
+    if WELCOME_PHOTO_ID:
+        try:
+            await callback.message.answer_photo(
+                photo=WELCOME_PHOTO_ID,
+                caption=ABOUT_TEXT,
+                reply_markup=main_menu_keyboard(),
+            )
+            await callback.answer()
+            return
+        except TelegramBadRequest:
+            logger.warning("Не удалось отправить фото для \"О тренере\", отправляю текст.")
+
     await callback.message.answer(ABOUT_TEXT, reply_markup=main_menu_keyboard())
     await callback.answer()
 
