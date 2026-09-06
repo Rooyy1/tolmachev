@@ -60,7 +60,7 @@ PRODUCTS = {
         "title": "3-дневный сплит под DDX",
         "price": 2990,
         "category": "cat_split_ddx",
-        "photo": "AgACAgIAAxkBAAMZap3U9vtVOLGnCKZGHJGt1bvXi4AAmQoaxtrt_FIxwvxinU11YcBAAMCAAN5AAM9BA",
+        "photo": "AgACAgIAAxkBAAMZap3U9vtVOLGnCKZGHJGt1bvXi4AAAmQoaxtrt_FIxwvxinU11YcBAAMCAAN5AAM9BA",
         "short": "Индивидуальная программа на 3 дня в неделю, адаптированная под приём DDX. Рассчитана на месяц.",
     },
     "split_4_ddx": {
@@ -112,14 +112,14 @@ PRODUCTS = {
         "title": "Разбор твоей тарелки",
         "price": 2500,
         "category": "cat_consult",
-        "photo": "AgACAgIAAxkBAAMXap3U9ZtqcIHTy5ohSq0YjjzwcIAAmMoaxtrt_FIdUoDnF_FbXoBAAMCAAN5AAM9BA",
+        "photo": "AgACAgIAAxkBAAMXap3U9ZtqcIHTy5ohSq0YjjzwcIAAAmMoaxtrt_FIdUoDnF_FbXoBAAMCAAN5AAM9BA",
         "short": "Полный разбор твоего текущего питания и рекомендации по корректировке.",
     },
     "consult_complex": {
         "title": "Комплекс: питание + трени + фарма + добавки",
         "price": 4500,
         "category": "cat_consult",
-        "photo": "AgACAgIAAxkBAAMHap3U8VR4EHYlCfRLxTuNyVHo4AAsUdaxuZIvFIc4QQ37vbAc0BAAMCAAN5AAM9BA",
+        "photo": "AgACAgIAAxkBAAMHap3U3A8VR4EHYlCfRLxTuNyVHo4AAsUdaxuZIvFIc4QQJ7vbAc0BAAMCAAN5AAM9BA",
         "short": "Комплексная консультация: питание, тренировки, фармакология и спортивное питание.",
     },
     # ---------- Онлайн-ведение ----------

@@ -132,6 +132,10 @@ docker run -d --restart unless-stopped --env-file .env --name tolmachev-bot tolm
 `show_product`). Чтобы креативы продолжили работать на новом боте — нужно
 заново переслать все 15 фото этому новому боту и обновить `file_id`.
 
+То же самое касается фото в приветственном сообщении (`/start`) —
+`WELCOME_PHOTO_ID` в `.env` / `config.py`, с тем же тихим откатом на текст
+без фото при смене бота (см. `handlers/start.py`, `send_welcome`).
+
 Реквизиты для оплаты — в `data/texts.py`, константа `PAYMENT_REQUISITES_TEXT`.
 Если номер телефона, банк или получатель поменяются — правьте только её.
 

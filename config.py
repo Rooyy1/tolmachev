@@ -18,6 +18,15 @@ TRAINER_USERNAME = os.getenv("TRAINER_USERNAME", "tema.evgenevich")
 #   3. Этот chat_id вписывается сюда, в .env
 TRAINER_CHAT_ID = int(os.getenv("TRAINER_CHAT_ID", "0") or 0)
 
+# file_id фотографии для приветственного сообщения (/start).
+# ВНИМАНИЕ: file_id привязан к конкретному боту, который изначально принял
+# это фото. Если используется другой BOT_TOKEN — file_id может не сработать,
+# в этом случае бот тихо отправит приветствие без фото (см. handlers/start.py).
+WELCOME_PHOTO_ID = os.getenv(
+    "WELCOME_PHOTO_ID",
+    "AgACAgIAAxkBAANHap3abUBoWdf-BSPQxJcHDiLAzXEAAqEoaxtrt_FIX-xsL-BazEgBAAMCAAN5AAM9BA",
+)
+
 if not BOT_TOKEN:
     raise RuntimeError(
         "BOT_TOKEN не задан. Скопируйте .env.example в .env и укажите токен, "

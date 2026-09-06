@@ -1,18 +1,41 @@
+import logging
+
 from aiogram import Router, F
+from aiogram.exceptions import TelegramBadRequest
 from aiogram.filters import Command, CommandStart
 from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message
 
+from config import WELCOME_PHOTO_ID
 from data.texts import MAIN_MENU_PROMPT, WELCOME_TEXT, WHOAMI_TEXT
 from keyboards.main import main_menu_keyboard
 
 router = Router()
+logger = logging.getLogger(__name__)
+
+
+async def send_welcome(message: Message) -> None:
+    """Одно цельное приветственное сообщение: фото + весь текст.
+    Если WELCOME_PHOTO_ID пустой или невалидный для текущего бота — не
+    падаем, а тихо отправляем текст без фото."""
+    if WELCOME_PHOTO_ID:
+        try:
+            await message.answer_photo(
+                photo=WELCOME_PHOTO_ID,
+                caption=WELCOME_TEXT,
+                reply_markup=main_menu_keyboard(),
+            )
+            return
+        except TelegramBadRequest:
+            logger.warning("Не удалось отправить фото приветствия, отправляю текст без фото.")
+
+    await message.answer(WELCOME_TEXT, reply_markup=main_menu_keyboard())
 
 
 @router.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext) -> None:
     await state.clear()
-    await message.answer(WELCOME_TEXT, reply_markup=main_menu_keyboard())
+    await send_welcome(message)
 
 
 @router.message(Command("menu"))
