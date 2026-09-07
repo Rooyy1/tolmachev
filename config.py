@@ -18,6 +18,11 @@ TRAINER_USERNAME = os.getenv("TRAINER_USERNAME", "tema.evgenevich")
 #   3. Этот chat_id вписывается сюда, в .env
 TRAINER_CHAT_ID = int(os.getenv("TRAINER_CHAT_ID", "0") or 0)
 
+# chat_id админа для CRM: сюда бот шлёт "🆕 Новый лид" при каждом первом
+# заходе нового пользователя, и только этому chat_id отвечает на /stats.
+# По умолчанию — фиксированный chat_id, можно переопределить через .env.
+ADMIN_CHAT_ID = int(os.getenv("ADMIN_CHAT_ID", "8913576204") or 0)
+
 # file_id фотографии для приветственного сообщения (/start).
 # ВНИМАНИЕ: file_id привязан к конкретному боту, который изначально принял
 # это фото. Если используется другой BOT_TOKEN — file_id может не сработать,

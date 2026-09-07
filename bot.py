@@ -8,6 +8,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import ErrorEvent
 
 from config import BOT_TOKEN
+from data import crm
 from handlers import catalog, common, payment, start
 
 logger = logging.getLogger(__name__)
@@ -18,6 +19,8 @@ async def main() -> None:
         level=logging.INFO,
         format="%(asctime)s | %(levelname)s | %(name)s | %(message)s",
     )
+
+    crm.init_db()  # CRM: таблица для учёта лидов (если её ещё нет)
 
     bot = Bot(token=BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
     dp = Dispatcher(storage=MemoryStorage())

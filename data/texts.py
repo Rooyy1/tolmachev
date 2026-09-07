@@ -63,3 +63,7 @@ FALLBACK_CALLBACK_TEXT = "Эта кнопка устарела"
 UNKNOWN_PRODUCT_TEXT = "Этот товар больше недоступен. Выбери актуальный вариант ниже."
 
 WHOAMI_TEXT = "Твой chat_id: <code>{chat_id}</code>\nUsername: @{username}"
+
+# --- CRM (учёт лидов) ---
+NEW_LEAD_NOTICE = "🆕 <b>Новый лид</b>\n\n👤 {mention}"
+STATS_TEXT = "📊 Всего пользователей в боте: <b>{total}</b>"
